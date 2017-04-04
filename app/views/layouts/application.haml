@@ -1,0 +1,8 @@
+!!! 5
+%html
+  %head
+    = render 'shared/head'
+  %body{class: %{controller_name + ' ' + controller_name + '-' + action_name no-touch}}
+    = render 'spree/shared/google_analytics.js'
+
+    = yield

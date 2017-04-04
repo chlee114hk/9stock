@@ -1,0 +1,462 @@
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin border-top-left-radius($radius) {
+  -webkit-border-top-left-radius: $radius;
+  -moz-border-top-left-radius: $radius;
+  -ms-border-top-left-radius: $radius;
+  border-top-left-radius: $radius;
+}
+
+@mixin border-top-right-radius($radius) {
+  -webkit-border-top-right-radius: $radius;
+  -moz-border-top-right-radius: $radius;
+  -ms-border-top-right-radius: $radius;
+  border-top-right-radius: $radius;
+}
+
+@mixin border-bottom-left-radius($radius) {
+  -webkit-border-bottom-left-radius: $radius;
+  -moz-border-bottom-left-radius: $radius;
+  -ms-border-bottom-left-radius: $radius;
+  border-bottom-left-radius: $radius;
+}
+
+@mixin border-bottom-right-radius($radius) {
+  -webkit-border-bottom-right-radius: $radius;
+  -moz-border-bottom-right-radius: $radius;
+  -ms-border-bottom-right-radius: $radius;
+  border-bottom-right-radius: $radius;
+}
+
+@mixin border-top-radius($radius) {
+  @include border-top-left-radius($radius);
+  @include border-top-right-radius($radius);
+}
+
+@mixin transition($all, $time) {
+  -moz-transition: $all $time;
+  -ms-transition: $all $time;
+  -webkit-transition: $all $time;
+  transition: $all $time;
+}
+
+@mixin scale($val) {
+  -webkit-transform: scale($val);
+    -moz-transform: scale($val);
+      -o-transform: scale($val);
+          transform: scale($val);
+}
+
+@mixin rotate($val) {
+ -webkit-transform: rotate($val);
+    -moz-transform: rotate($val);
+      -o-transform: rotate($val);
+          transform: rotate($val);
+}
+@mixin translate3d($x, $y, $z) {
+  -webkit-transform: translate3d($x, $y, $z);
+    -moz-transform: translate3d($x, $y, $z);
+      -o-transform: translate3d($x, $y, $z);
+        transform: translate3d($x, $y, $z);
+}
+
+@mixin translatePos($x, $y) {
+  -webkit-transform: translate($x, $y);
+    -moz-transform: translate($x, $y);
+      -o-transform: translate($x, $y);
+        transform: translate($x, $y);
+}
+
+@mixin text-shadow($top, $left, $blur, $color) {
+  -webkit-text-shadow: $top $left $blur $color;
+  -moz-text-shadow: $top $left $blur $color;
+  -ms-text-shadow: $top $left $blur $color;
+  text-shadow: $top $left $blur $color;
+}
+
+@mixin box-shadow($top, $left, $blur, $color) {
+  -webkit-box-shadow: $top $left $blur $color;
+  -moz-box-shadow: $top $left $blur $color;
+  box-shadow: $top $left $blur $color;
+}
+
+@mixin flex() {
+  display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox;      /* TWEENER - IE 10 */
+  display: -moz-flexbox;      /* NEW - Chrome */
+  display: -webkit-flex;
+  display: flex;
+}
+
+@mixin flex-row() {
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+@mixin flex-column() {
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+@mixin flex-wrap(){
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+@mixin flex-align-item ($align) {
+  -webkit-align-items: $align;
+      -ms-align-items: $align;
+          align-items: $align;
+}
+@mixin flex-align-content ($align) {
+  -webkit-align-content: $align;
+      -ms-align-content: $align;
+          align-content: $align;
+}
+@mixin justify-content($justify) {
+  -webkit-justify-content: $justify;
+      -ms-justify-content: $justify;
+          justify-content: $justify;
+}
+@mixin align-self($align) {
+  -webkit-align-self: $align;
+      -ms-align-self: $align;
+          align-self: $align;
+}
+
+@mixin animation($name, $time, $loop, $time2) {
+    -webkit-animation-name: $name;
+    -webkit-animation-duration: $time;
+    -webkit-animation-iteration-count: $loop;
+    -webkit-animation-timing-function: $time2;
+
+    -moz-animation-name: $name;
+    -moz-animation-duration: $time;
+    -moz-animation-iteration-count: $loop;
+    -moz-animation-timing-function: $time2;
+
+    -ms-animation-name: $name;
+    -ms-animation-duration: $time;
+    -ms-animation-iteration-count: $loop;
+    -ms-animation-timing-function: $time2;
+
+    animation-name: $name;
+    animation-duration: $time;
+    animation-iteration-count: $loop;
+    animation-timing-function: $time2;
+}
+
+// offset and position
+// based on http://hugogiraudel.com/2014/05/19/new-offsets-sass-mixin/
+
+@mixin offset($args: ()) {
+	$offsets: top right bottom left;
+
+	@each $offset in $offsets {
+		$index: index($args, $offset);
+
+		@if $index {
+			@if $index == length($args) {
+				#{$offset}: 0;
+			} @else {
+				$next: nth($args, $index + 1);
+				@if is-valid-length($next) {
+					#{$offset}: $next;
+				} @else if index($offsets, $next) {
+					#{$offset}: 0;
+				} @else {
+					@warn 'Invalid value `#{$next}` for offset `#{$offset}`.';
+				}
+			}
+		}
+	}
+}
+
+@function is-valid-length($value) {
+	@return (type-of($value) == 'number' and not(unitless($value))) or (type-of(index(auto initial inherit 0, $value)) == 'number');
+}
+
+@mixin position($position, $args: ()) {
+	position: $position;
+	@include offset($args);
+}
+
+@mixin absolute($args: ()) {
+	@include position(absolute, $args);
+}
+
+@mixin fixed($args: ()) {
+	@include position(fixed, $args);
+}
+
+@mixin relative($args: ()) {
+	@include position(relative, $args);
+}
+
+
+
+// font size
+
+// from http://hugogiraudel.com/2013/08/12/sass-functions/
+@function strip-unit($value) {
+	@return $value / ($value * 0 + 1);
+}
+
+@function px-or-unitless($value) {
+	@return type-of(index(unquote('') 'px', unit($value))) == 'number';
+}
+
+@function em($pxs, $base: 10) {
+	@if not(px-or-unitless($base)) {
+		@warn 'em(): Base font size `#{$base}` has an unsupported unit.';
+	}
+	$base: strip-unit($base);
+	$result: ();
+
+	@each $px in $pxs {
+		$value: $px;
+		@if type-of($px) == 'number' and px-or-unitless($px) {
+			$value: strip-unit($px);
+			@if $value != 0 {
+				// http://vvv.tobiassjosten.net/css/px-to-em-with-sass/
+				$value: ($value / $base) * 1em;
+			}
+		}
+		$result: append($result, $value);
+	}
+
+	@if length($result) == 1 {
+		$result: nth($result, 1);
+	}
+
+	@return $result;
+}
+
+@mixin em-font-size($font-size, $line-height: null, $base: 10) {
+	font-size: em($font-size, $base);
+
+	@if $line-height {
+		@if not(px-or-unitless($font-size)) {
+			@warn 'em-font-size(): Font size `#{$font-size}` has an unsupported unit.';
+		}
+		@if not(px-or-unitless($line-height)) {
+			@warn 'em-font-size(): Line height `#{$line-height}` has an unsupported unit.';
+		}
+
+		line-height: (strip-unit($line-height) / strip-unit($font-size));
+	}
+}
+
+
+
+// media queries, old ie and placeholders
+// based on
+// https://jakearchibald.github.io/sass-ie/
+// http://davidwalsh.name/write-media-queries-sass
+// http://www.sitepoint.com/cross-media-query-extend-sass/
+
+// returns the (pixel) width defined for the given name
+@function get-window-width($value) {
+	$width: null;
+
+	@if type-of($value) == 'number' {
+		$width: $value;
+
+	} @else {
+		@each $w in $window-widths {
+			@if nth($w, 1) == $value {
+				$width: nth($w, 2);
+			}
+		}
+	}
+
+	@if not($width) {
+		@warn 'get-window-width(): Unknown window width `#{$name}`';
+	}
+
+	@return $width;
+}
+
+$fixed-window-width: false !default;
+$minimum-window-width: false !default;
+
+@mixin min-window-width($width, $ie: false) {
+	@if $fixed-window-width {
+		$fixed-window-width: get-window-width($fixed-window-width);
+	}
+	@if $minimum-window-width {
+		$minimum-window-width: get-window-width($minimum-window-width);
+	}
+
+	// output all rules for this width or narrower, without media queries
+	// rules for wider widths are omitted
+	@if $fixed-window-width {
+		@if $width <= $fixed-window-width {
+			@if $ie {
+				@media only screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+					@content;
+				}
+			} @else {
+				@content;
+			}
+		}
+
+	// output all rules for this width or narrower, without media queries
+	// for wider widths, fall back to default (with media queries)
+	} @else if $minimum-window-width and $width <= $minimum-window-width {
+		@if $ie {
+			@media only screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+				@content;
+			}
+		} @else {
+			@content;
+		}
+
+	} @else {
+		$em-window-width: em($width + 20, 16);
+
+		@if $ie {
+			@media only screen and (min-width: $em-window-width) and (-ms-high-contrast: active), screen and (min-width: $em-window-width) and (-ms-high-contrast: none) {
+				@content;
+			}
+		} @else {
+			@media only screen and (min-width: $em-window-width) {
+				@content;
+			}
+		}
+	}
+}
+
+$old-ie: false !default;
+
+@mixin old-ie {
+	@if $old-ie {
+		@content;
+	}
+}
+
+$default-window-width: 'root';
+$current-window-width: $default-window-width;
+
+@mixin window-width($name, $ie: false) {
+	$current-window-width: $name;
+
+	@include min-window-width(get-window-width($name), $ie) {
+		@content;
+	}
+
+	$current-window-width: $default-window-width;
+}
+
+@mixin define($name) {
+	%#{$name}-#{$default-window-width} {
+		@content;
+	}
+
+	@each $w in $window-widths {
+		$width: nth($w, 1);
+
+		@include window-width($width) {
+			%#{$name}-#{$width} {
+				@content;
+			}
+		}
+	}
+}
+
+@mixin extend($name) {
+	@extend %#{$name}-#{$current-window-width};
+}
+
+
+
+// ie (old and new)
+
+@mixin ie($width: null, $is-html: false) {
+	@if $width {
+		// ie < 10
+		@if $is-html {
+			&.ie {
+				@include window-width($width) {
+					@content;
+				}
+			}
+		} @else {
+			.ie & {
+				@include window-width($width) {
+					@content;
+				}
+			}
+		}
+
+		// ie >= 10
+		@if not($old-ie) {
+			@include window-width($width, true) {
+				@content;
+			}
+		}
+
+	} @else {
+		// ie < 10
+		@if $is-html {
+			&.ie {
+				@content;
+			}
+		} @else {
+			.ie & {
+				@content;
+			}
+		}
+
+		// ie >= 10
+		@if not($old-ie) {
+			@media only screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+				@content;
+			}
+		}
+	}
+}
+
+@mixin rgba-background-color($color: null, $alpha: 1) {
+	@if $color {
+		$rgba: rgba($color, $alpha);
+		$hex: ie-hex-str($rgba);
+
+		background-color: $color;
+		background-color: $rgba;
+
+		@include old-ie {
+			background-color: transparent;
+			-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#{$hex},endColorstr=#{$hex})";
+			filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#{$hex},endColorstr=#{$hex});
+			zoom: 1;
+		}
+
+	} @else {
+		background-color: transparent;
+
+		@include old-ie {
+			-ms-filter: "none";
+			filter: none;
+		}
+	}
+}
+
+@mixin opacity($alpha) {
+	$percent: ($alpha * 100);
+
+	opacity: $alpha;
+
+	@include old-ie {
+		-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=#{$percent})";
+		filter: alpha(opacity=#{$percent});
+	}
+}

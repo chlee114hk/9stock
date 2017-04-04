@@ -1,0 +1,40 @@
+{
+  "name": "9stock",
+  "version": "0.9.0",
+  "description": "Spark Solutions starter kit",
+  "main": "server-express.js",
+  "engines": {
+    "node": "6.9.1",
+    "npm": "3.10.8"
+  },
+  "scripts": {
+    "postinstall": "cd client && npm install",
+    "test": "npm run test:client",
+    "test:client": "(cd client && npm run test --silent)",
+    "lint": "(cd client && npm run lint --silent)",
+    "build:clean": "rm app/assets/webpack/*",
+    "build:client": "(cd client && npm run build:client --silent)",
+    "build:server": "(cd client && npm run build:server --silent)",
+    "build:dev:client": "(cd client && npm run build:dev:client --silent)",
+    "build:dev:server": "(cd client && npm run build:dev:server --silent)",
+    "build:test:client": "(cd client && npm run build:test:client --silent)",
+    "start": "(cd client && npm run start --silent)"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chlee114hk/9stock.git"
+  },
+  "keywords": [
+    "react",
+    "tutorial",
+    "comment",
+    "example"
+  ],
+  "author": "damianlegawiec",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chlee114hk/9stock/issues"
+  },
+  "homepage": "https://github.com/chlee114hk/9stock",
+  "dependencies": {}
+}
